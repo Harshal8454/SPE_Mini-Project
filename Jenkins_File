@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     // Build Docker image
-                    docker.build("${DOCKER_IMAGE_NAME}", "-f SPE_MiniProject/Dockerfile SPE_MiniProject")
+                    docker.build("${DOCKER_IMAGE_NAME}", "-f SPE_Mini-Project/Dockerfile SPE_Mini-Project")
                 }
             }
         }
