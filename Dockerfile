@@ -8,11 +8,12 @@ RUN apt-get update \
     && apt-get install -y python3 python3-pip apt-utils debconf dialog \
     && rm -rf /var/lib/apt/lists/*
 
-# Create app directory
+# Create and switch to the app directory
 WORKDIR /app
 
 # Copy application files
-COPY cal.py test.py /app/
+COPY cal.py test.py .  # Copies files into /app/
 
 # Set default command
-CMD ["python3", "/app/cal.py"]
+CMD ["python3", "cal.py"]  # Runs from /app/ since WORKDIR is set
+
