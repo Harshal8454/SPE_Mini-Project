@@ -1,17 +1,21 @@
 FROM ubuntu:latest
 
-# Update package list and install Python
+# Set non-interactive mode to prevent prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install dependencies
 RUN apt-get update \
     && apt-get install -y python3 python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-# Create the /app directory and set it as the working directory
+# Create and switch to the app directory
 WORKDIR /app
 
-# Copy the Python files into /app
-COPY cal.py test.py .  # Correct way to copy
+# Copy application files
+COPY cal.py test.py .  # Copies files into /app/
 
-# Ensure CMD runs from /app
-CMD ["python3", "/app/cal.py"]
+# Set default command
+CMD ["python3", "./cal.py"]  # Uses relative path instead of absolute
+
 
 
