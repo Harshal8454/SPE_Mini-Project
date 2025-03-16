@@ -14,8 +14,9 @@ WORKDIR /app
 # Copy application files
 COPY cal.py test.py .  # Correctly copies files into /app/
 
-# Set default command using full absolute path
-CMD ["python3", "/app/cal.py"]
+# Ensure CMD runs from /app/
+CMD ["sh", "-c", "cd /app && python3 cal.py"]
+
 
 
 
