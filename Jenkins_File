@@ -23,7 +23,6 @@ pipeline {
                 script {
                     sh """
                         ls -l  # Debugging workspace
-                        cd SPE_Mini-Project
                         echo '${OPTION}\n${NUMBER}\n${EXP}' | python3 cal.py
                     """
                 }
@@ -35,7 +34,6 @@ pipeline {
                 script {
                     sh """
                         ls -l  # Debugging workspace
-                        cd SPE_Mini-Project
                         python3 test.py
                     """
                 }
@@ -45,7 +43,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE_NAME}", "-f SPE_Mini-Project/Dockerfile SPE_Mini-Project")
+                    docker.build("${DOCKER_IMAGE_NAME}", "-f Dockerfile .")
                 }
             }
         }
@@ -65,8 +63,8 @@ pipeline {
             steps {
                 script {
                     ansiblePlaybook(
-                        playbook: 'SPE_Mini-Project/Deploy.yml',
-                        inventory: 'SPE_Mini-Project/Inventory'
+                        playbook: "Deploy.yml",
+                        inventory: "Inventory"
                     )
                 }
             }
