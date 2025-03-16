@@ -1,19 +1,17 @@
 FROM ubuntu:latest
 
-# Set environment variable to prevent interactive prompts
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Install dependencies
+# Update package list and install Python
 RUN apt-get update \
-    && apt-get install -y python3 python3-pip apt-utils debconf dialog \
+    && apt-get install -y python3 python3-pip \
     && rm -rf /var/lib/apt/lists/*
 
-# Create and switch to the app directory
+# Create the /app directory and set it as the working directory
 WORKDIR /app
 
-# Copy application files
-COPY cal.py test.py .  # Copies files into /app/
+# Copy the Python files into /app
+COPY cal.py test.py .  # Correct way to copy
 
-# Set default command
+# Ensure CMD runs from /app
 CMD ["python3", "/app/cal.py"]
+
 
