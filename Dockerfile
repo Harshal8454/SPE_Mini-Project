@@ -15,5 +15,5 @@ WORKDIR /app
 COPY cal.py test.py .  # Copies files into /app/
 
 # Set default command
-CMD ["python3", "cal.py"]  # Runs from /app/ since WORKDIR is set
+CMD ["python3", "/app/cal.py"]
 
