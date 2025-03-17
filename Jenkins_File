@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE_NAME = 'calculator_python'
-        GITHUB_REPO_URL = 'https://github.com/saurabhv0903/SPE_miniproject.git'
+        DOCKER_IMAGE_NAME = 'calculator'
+        GITHUB_REPO_URL = 'https://github.com/Harshal8454/SPE_Mini-Project.git'
 	OPTION = 1
 	NUMBER = 2
 	EXP = 3
@@ -23,7 +23,7 @@ pipeline {
         stage('Run Main Application') {
             steps {
                 script {
-                    sh "echo '${OPTION}\n${NUMBER}\n${EXP}' | python3 calculator_main.py"
+                    sh "echo '${OPTION}\n${NUMBER}\n${EXP}' | python3 cal.py"
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    sh 'python3 calculator_test.py'
+                    sh 'python3 test.py'
                 }
             }
         }
@@ -51,8 +51,8 @@ pipeline {
             steps {
                 script{
                     docker.withRegistry('', 'DockerHubCred') {
-                    sh 'docker tag calculator_python saurabhv09/calculator_python:latest'
-                    sh 'docker push saurabhv09/calculator_python'
+                    sh 'docker tag calculator harshal8454/calculator:latest'
+                    sh 'docker push harshal8454/calculator'
                     }
                  }
             }
