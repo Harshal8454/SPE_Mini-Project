@@ -51,13 +51,14 @@ pipeline {
         stage('Push Docker Images') {
             steps {
                 script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'DockerHubCred') {
+                    docker.withRegistry('', 'DockerHubCred') {  // Uses the correct default registry
                         sh 'docker tag calculator harshal8454/calculator:latest'
                         sh 'docker push harshal8454/calculator'
                     }
                 }
             }
         }
+
 
         stage('Run Ansible Playbook') {
             steps {
