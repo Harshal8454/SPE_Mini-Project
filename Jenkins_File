@@ -4,16 +4,13 @@ pipeline {
     environment {
         DOCKER_IMAGE_NAME = 'calculator'
         GITHUB_REPO_URL = 'https://github.com/Harshal8454/SPE_Mini-Project.git'
-        OPTION = 1
-        NUMBER = 2
-        EXP = 3
     }
 
     stages {
         stage('Checkout') {
             steps {
                 script {
-                    checkout scm  // Corrected Git checkout method
+                    checkout scm
                 }
             }
         }
@@ -21,6 +18,9 @@ pipeline {
         stage('Run Main Application') {
             steps {
                 script {
+                    def OPTION = 1
+                    def NUMBER = 2
+                    def EXP = 3
                     sh """
                         ls -l ${WORKSPACE}  # Debugging workspace
                         echo '${OPTION}\n${NUMBER}\n${EXP}' | python3 ${WORKSPACE}/cal.py
@@ -43,7 +43,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    docker.build("${DOCKER_IMAGE_NAME}", "-f ${WORKSPACE}/Dockerfile ${WORKSPACE}")
+                    sh "docker build -t ${DOCKER_IMAGE_NAME} -f ${WORKSPACE}/Dockerfile ${WORKSPACE}"
                 }
             }
         }
@@ -52,13 +52,14 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'DockerHubCred') {  // Uses the correct default registry
-                        sh 'docker tag calculator harshal8454/calculator:latest'
-                        sh 'docker push harshal8454/calculator'
+                        sh """
+                            docker tag ${DOCKER_IMAGE_NAME} harshal8454/${DOCKER_IMAGE_NAME}:latest
+                            docker push harshal8454/${DOCKER_IMAGE_NAME}:latest
+                        """
                     }
                 }
             }
         }
-
 
         stage('Run Ansible Playbook') {
             steps {
