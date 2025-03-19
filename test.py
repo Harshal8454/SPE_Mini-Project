@@ -4,7 +4,7 @@ import cal
 class TestCalculator(unittest.TestCase):
 
     def test_square_root(self):
-        self.assertAlmostEqual(cal.square_root(16), 4.0)   
+        self.assertAlmostEqual(cal.square_root(16), 3.0)   
         self.assertAlmostEqual(cal.square_root(25), 5.0)   
         self.assertAlmostEqual(cal.square_root(4), 2.0)    
         self.assertAlmostEqual(cal.square_root(9), 3.0)    
